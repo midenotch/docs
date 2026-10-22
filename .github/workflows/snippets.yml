@@ -1,4 +1,4 @@
-﻿name: Snippet checks
+name: Snippet checks
 
 on:
   pull_request:
@@ -98,7 +98,7 @@ jobs:
         uses: actions/checkout@v4
 
       # -----------------------------------------------------------------------
-      # Rust â€” pinned stable toolchain for reproducibility.
+      # Rust — pinned stable toolchain for reproducibility.
       # -----------------------------------------------------------------------
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
@@ -107,7 +107,7 @@ jobs:
           components: rustfmt
 
       # -----------------------------------------------------------------------
-      # Python â€” pinned minor version; patch resolved by setup-python.
+      # Python — pinned minor version; patch resolved by setup-python.
       # -----------------------------------------------------------------------
       - name: Setup Python
         uses: actions/setup-python@v5
@@ -141,7 +141,7 @@ jobs:
         run: pnpm run check:snippets-extended
 
       # -----------------------------------------------------------------------
-      # Compile the Rust quickstart crate â€” this is the ground-truth check
+      # Compile the Rust quickstart crate — this is the ground-truth check
       # that all documented crypto code actually compiles and its tests pass.
       # The second pass enables the "network" feature so the scan / send
       # modules (reqwest / tokio) are type-checked too; it is compile-only,
@@ -166,7 +166,7 @@ jobs:
   stellar-testnet-snippets:
     name: Stellar snippet testnet validation
     runs-on: ubuntu-latest
-    # No top-level continue-on-error â€” individual steps control leniency.
+    # No top-level continue-on-error — individual steps control leniency.
     needs: extract-sdk-version
     steps:
       - name: Checkout
@@ -215,9 +215,9 @@ jobs:
       # the next step a reliable signal to branch on.
       #
       # Exit codes (defined in check-stellar-testnet-snippets.ts):
-      #   0  â€“ all checks passed
-      #   1  â€“ content regression   â†’ hard failure, blocks merge
-      #   2  â€“ provider outage      â†’ warning annotation only, does NOT block
+      #   0  – all checks passed
+      #   1  – content regression   → hard failure, blocks merge
+      #   2  – provider outage      → warning annotation only, does NOT block
       - name: Validate Stellar testnet provider availability (non-blocking)
         id: provider-check
         continue-on-error: true
@@ -231,9 +231,9 @@ jobs:
           echo "exit-status=$STATUS" >> "$GITHUB_OUTPUT"
           exit $STATUS
 
-      # Exit 1  â†’ content regression from a reachable provider; hard-fail.
-      # Exit 2  â†’ provider outage; emit a warning annotation and continue.
-      # Exit 0  â†’ all good; nothing to do.
+      # Exit 1  → content regression from a reachable provider; hard-fail.
+      # Exit 2  → provider outage; emit a warning annotation and continue.
+      # Exit 0  → all good; nothing to do.
       - name: Classify provider-check exit status
         if: always()
         env:
