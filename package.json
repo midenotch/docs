@@ -15,6 +15,7 @@
     "check:compatibility-matrix": "node scripts/check-compatibility-matrix.mjs",
     "check:redirects-and-anchors": "node scripts/check-redirects-and-anchors.mjs",
     "test:redirects-and-anchors": "node --test scripts/check-redirects-and-anchors.test.mjs",
+    "test:compatibility-matrix": "node --test scripts/check-compatibility-matrix.test.mjs",
     "test:contract-registry": "node --test scripts/check-contract-registry.test.mjs",
     "test:preview-redirect": "node --test scripts/check-preview-redirect.test.mjs",
     "check:stellar-testnet": "tsx scripts/check-stellar-testnet-snippets.ts",
@@ -26,7 +27,7 @@
     "test:playground": "playwright test --config scripts/playground/tests/playwright.config.ts",
     "mint:validate": "mint validate",
     "mint:broken-links": "mint broken-links",
-    "test": "npm run check:snippets && npm run check:integration-guides && npm run check:nav-coverage && npm run check:contract-registry && npm run check:compatibility-matrix && npm run test:redirects-and-anchors"
+    "test": "npm run check:snippets && npm run check:integration-guides && npm run check:nav-coverage && npm run check:contract-registry && npm run check:compatibility-matrix && npm run test:redirects-and-anchors && npm run test:compatibility-matrix"
   },
   "dependencies": {
     "@solana/web3.js": "^1.99.0",
