@@ -23,6 +23,8 @@ pub fn load_keypair(secret: &str) -> Result<Account> {
     })
 }
 
+// crate-only-begin: fixture secret + unit tests, not shown in the guide
+
 /// Fixture keypair used in tests and CI verification.
 ///
 /// This is a well-known test vector: the all-zeros 32-byte seed encoded as a
@@ -58,3 +60,4 @@ mod tests {
         assert_eq!(acct.seed.len(), 32);
     }
 }
+// crate-only-end

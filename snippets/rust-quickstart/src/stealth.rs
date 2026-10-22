@@ -198,6 +198,7 @@ pub fn sign_with_scalar(scalar_le: &[u8; 32], message: &[u8], pubkey: &[u8; 32])
     sig
 }
 
+// crate-only-begin: unit tests, not shown in the guide
 // ── Tests ─────────────────────────────────────────────────────────────────────
 
 #[cfg(test)]
@@ -287,3 +288,4 @@ mod tests {
         assert_eq!(found.len(), 0, "corrupted view tag must be filtered");
     }
 }
+// crate-only-end
