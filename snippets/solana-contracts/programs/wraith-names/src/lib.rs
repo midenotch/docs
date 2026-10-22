@@ -1,9 +1,15 @@
 // programs/wraith-names/src/lib.rs
 //
-// Compiled reference for contracts/solana.mdx § wraith-names.
+// Structural fixture for contracts/solana.mdx § wraith-names.
 //
 // PDA-based name to meta-address mapping.
 // Names are stored in Program Derived Addresses seeded by ["name", nameBytes].
+//
+// This crate mirrors the *shape* of the canonical program — instruction
+// signatures, account contexts, account layouts, events, and error codes — so
+// the documented snippets can be type-checked in CI. It is a documentation
+// fixture, not the program that runs on chain: it is not deployed, and its
+// instruction bodies are abbreviated or omitted.
 //
 // Program ID matches the deployed devnet program recorded in the canonical
 // deployment manifest (wraith-protocol/contracts deployments/solana) and in
@@ -30,10 +36,9 @@ pub mod wraith_names {
 
     /// Register a new `.wraith` name.
     ///
-    /// ABBREVIATED: full production code also verifies a secp256k1 signature
-    /// from the spending key embedded in meta_address, ensuring only the
-    /// meta-address owner can claim a name.  The validation of name format
-    /// and meta_address length is shown here in full.
+    /// The name format is validated and the supplied meta-address is stored
+    /// as-is. Record ownership is tied to the registrant's Solana wallet
+    /// (`owner`); the meta-address itself is not authenticated on chain.
     pub fn register(ctx: Context<Register>, name: String, meta_address: [u8; 64]) -> Result<()> {
         require!(
             name.len() >= 3 && name.len() <= MAX_NAME_LEN,

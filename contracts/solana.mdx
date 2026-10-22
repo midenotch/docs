@@ -5,13 +5,20 @@ description: "Anchor program specs and deployment"
 
 Solana programs (smart contracts) for stealth address operations, written in Rust with the Anchor framework.
 
-Every Rust block on this page is a verbatim excerpt from the compiled reference
+Every Rust block on this page is a verbatim excerpt from the reference
 workspace in [`snippets/solana-contracts`](https://github.com/wraith-protocol/docs/tree/develop/snippets/solana-contracts),
 which CI type-checks with `cargo check --workspace` against the pinned
 `anchor-lang` release and gates with `cargo fmt --check`. A second CI step
-validates the workspace's program IDs and account layouts against the canonical
-program sources and the chain-generated deployment record in the
-`wraith-protocol/contracts` repository.
+compares the workspace's program IDs, instruction signatures, account
+layouts, events, and error codes against the canonical program sources and
+the chain-generated deployment record in the `wraith-protocol/contracts`
+repository.
+
+Those checks are **structural**. They confirm that the documented API shape
+matches the canonical program and that the program IDs match the deployment
+record. They do not execute the program, deploy it, or verify runtime
+on-chain behaviour; the workspace is a documentation fixture, not a deployment
+artifact.
 
 Two things are intentionally abbreviated here:
 
@@ -323,6 +330,11 @@ This means names are globally unique and can be resolved without knowing the own
 - Meta-address: must be exactly 64 bytes (two 32-byte ed25519 public keys)
 - Only the owner can update or release a name
 
+The meta-address is stored exactly as supplied. The program does not verify a
+spending-key signature over it: registration binds the record to the
+registrant's Solana wallet, and later updates are gated on that wallet being
+the record owner.
+
 ### Error Codes
 
 ```rust
@@ -411,7 +423,7 @@ anchor deploy --provider.cluster devnet
 anchor test
 ```
 
-Tests cover:
+The canonical program's `anchor test` suite covers:
 - **wraith-announcer** — event emission, multiple callers, metadata preservation
 - **wraith-sender** — `send_sol` transfers + emits, `send_spl` token transfer + emits, insufficient funds rejection
 - **wraith-names** — register/resolve, name validation (too short, invalid chars), update by owner, update by non-owner (rejected), release and re-register
@@ -425,7 +437,7 @@ Tests cover:
 | Language | Solidity | Rust | Rust (Anchor) |
 | Contract model | Bytecode deployment | WASM deployment | BPF program deployment |
 | Name storage | Contract storage | Contract storage | PDAs (Program Derived Addresses) |
-| Name sig verification | On-chain ECDSA recovery | Caller auth | Signer constraint |
+| Name sig verification | On-chain ECDSA recovery | Caller auth | Wallet signer constraint (no meta-address signature check) |
 | Event indexing | Subgraph / The Graph | Soroban RPC `getEvents` | Program transaction logs |
 | Account model | Address always exists | Must `createAccount` first | Address always valid, no deployment |
 | Token transfers | `msg.value` / `safeTransferFrom` | Soroban token contract | SystemProgram / SPL Token |

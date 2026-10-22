@@ -1,9 +1,15 @@
 // programs/wraith-sender/src/lib.rs
 //
-// Compiled reference for contracts/solana.mdx § wraith-sender.
+// Structural fixture for contracts/solana.mdx § wraith-sender.
 //
 // Atomic SOL or SPL token transfer + announcement in one instruction.
 // Sends funds to the stealth address and emits an announcement event.
+//
+// This crate mirrors the *shape* of the canonical program — instruction
+// signatures, account contexts, account layouts, events, and error codes — so
+// the documented snippets can be type-checked in CI. It is a documentation
+// fixture, not the program that runs on chain: it is not deployed, and its
+// instruction bodies are abbreviated or omitted.
 //
 // Program ID matches the deployed devnet program recorded in the canonical
 // deployment manifest (wraith-protocol/contracts deployments/solana) and in

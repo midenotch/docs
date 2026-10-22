@@ -86,8 +86,8 @@ const langMap: Record<string, Lang> = {
 /**
  * MDX pages whose Rust fences cannot be compiled by bare `rustc` (they are
  * Anchor program snippets that need `anchor-lang`). Each fence is instead
- * verified verbatim against a compiled reference workspace by the named
- * script, and that workspace is type-checked with cargo in CI.
+ * compared verbatim against a reference workspace by the named script, and
+ * that workspace is type-checked with cargo in CI.
  */
 const crateChecked: Record<string, string> = {
   "contracts/solana.mdx": "check:solana-contracts (snippets/solana-contracts workspace)",

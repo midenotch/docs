@@ -1,11 +1,17 @@
 /**
  * check-solana-contracts.ts
  *
- * Validates the Solana contract guide (`contracts/solana.mdx`) and its
- * compiled reference workspace (`snippets/solana-contracts/`) against the
- * canonical program sources and the chain-generated deployment record in the
+ * Compares the Solana contract guide (`contracts/solana.mdx`) and its
+ * reference workspace (`snippets/solana-contracts/`) against the canonical
+ * program sources and the chain-generated deployment record in the
  * `wraith-protocol/contracts` repository — the same sources the SDK's
  * `getDeployment("solana")` manifest is generated from.
+ *
+ * These checks are STRUCTURAL: they compare published API shape (instruction
+ * signatures, account contexts, account layouts, events, error codes) and
+ * program IDs. They do not execute the programs, deploy them, or verify
+ * runtime on-chain behaviour, and they do not compare instruction bodies —
+ * the workspace crates are documentation fixtures whose bodies are abbreviated.
  *
  * Run it after editing either the guide or the workspace:
  *
@@ -35,7 +41,7 @@
  *
  * Checks 3 (chain manifest) and 4 need network access to fetch the pinned
  * canonical sources. Skip them locally with --offline; CI always runs the
- * full verification.
+ * full comparison.
  *
  * Wired into CI via the "Compile Rust / Python / shell / config snippets" job
  * in .github/workflows/snippets.yml.
@@ -841,11 +847,11 @@ async function main() {
     process.exit(1);
   }
 
-  const verified = OFFLINE
+  const compared = OFFLINE
     ? "guide, workspace, SDK manifest (offline)"
     : "guide, workspace, SDK manifest, canonical programs, chain-generated deployment record";
   console.log(
-    `Solana contract check passed: ${fences.length} guide fence(s), ${PROGRAMS.length} program(s) verified against: ${verified}.`,
+    `Solana contract structure check passed: ${fences.length} guide fence(s), ${PROGRAMS.length} program(s) compared against: ${compared}.`,
   );
 }
 
