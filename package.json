@@ -18,6 +18,7 @@
     "test:contract-registry": "node --test scripts/check-contract-registry.test.mjs",
     "test:preview-redirect": "node --test scripts/check-preview-redirect.test.mjs",
     "check:stellar-testnet": "tsx scripts/check-stellar-testnet-snippets.ts",
+    "test:stellar-testnet": "node --test scripts/check-stellar-testnet-snippets.test.mjs",
     "generate:stellar-reference": "tsx scripts/generate-stellar-reference.ts",
     "check:stellar-reference": "tsx scripts/generate-stellar-reference.ts --check",
     "generate:playground-fixtures": "node scripts/playground/generate-fixtures.mjs",
